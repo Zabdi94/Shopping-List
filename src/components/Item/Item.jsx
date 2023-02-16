@@ -16,10 +16,11 @@ function Item({ getItems, item }) {
 			});
 	};
 
-	const updateItem = (id) => {
+	const updateItem = (e) => {
+		const id = e.target.value;
 		console.log("click updateItem", id);
 		axios
-			.put(`/items/${id}`)
+			.put(`/item/${id}`)
 			.then((response) => {
 				console.log("in app updateItem axios.then");
 				getItems();
@@ -34,7 +35,9 @@ function Item({ getItems, item }) {
 			<button value={item.id} onClick={(e) => deleteItem(e)}>
 				Delete
 			</button>
-			<button>UPDATE</button>
+			<button value={item.id} onClick={(e) => updateItem(e)}>
+				Update
+			</button>
 		</div>
 	);
 }
