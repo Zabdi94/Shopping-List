@@ -38,4 +38,17 @@ router.get("/", (req, res) => {
 		});
 });
 
+router.put("/", (req, res) => {
+	const sqlText = `UPDATE items SET "isPurchased"=false;`;
+
+	pool.query(sqlText)
+		.then(() => {
+			res.sendStatus(201);
+		})
+		.catch((error) => {
+			console.log(`Error making database query ${sqlText}`, error);
+			res.sendStatus(500);
+		});
+});
+
 module.exports = router;
