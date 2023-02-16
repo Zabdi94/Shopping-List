@@ -78,17 +78,17 @@ router.put("/", (req, res) => {
         WHERE id =$1;
         `
         //Set variables for params
-        const deleteId = req.params.id;
+        const updateId = req.params.id;
         
         //assign variables to params
-        const sqlParams = [deleteId]
+        const sqlParams = [updateId]
         
         //send sql query to the database
         pool.query(sqlText,sqlParams)
         .then ((result) => {
-            res.send(result.rows);
             console.log('in items.router router.put then');
-            res.sendStatus(200);
+            res.status(200);
+            res.send(result.rows);
         })
             .catch ((error)=> {
                 console.log('error making database updates',error);
