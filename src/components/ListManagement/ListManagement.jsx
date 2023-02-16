@@ -17,8 +17,8 @@ function ListManagement({ getItems, itemList }) {
   const handleReset = () => {
     axios
       .put("/item")
-      .then((reponse) => {
-        console.log(reponse);
+      .then((response) => {
+        console.log(response);
         getItems();
       })
       .catch(() => {
