@@ -97,6 +97,25 @@ router.put("/", (req, res) => {
 
     });
 
+	router.delete('/:id', (req, res) => {
+		const id = req.params.id; 
+
+		const sqlText = `
+		DELETE from "items"
+		WHERE "id"= $1`;
+
+		const sqlParams = [id]
+
+		pool.query(sqlText, sqlParams)
+		.then(() => {
+			res.sendStatus(204); 
+		})
+		.catch((err) => {
+			console.log('Error in delete', err);
+			res.sendStatus(500); 
+		})
+	});
+
 
     
 
