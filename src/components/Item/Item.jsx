@@ -1,37 +1,40 @@
 import "./Item.css";
-import axios from "axios";
+import axios from 'axios';
 import { useState } from "react";
-
-function Item({ getItems, itemList }) {
-
-	
+function Item({ getItems, item }) {
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	const updateItem = (id =>{
-		console.log('click updateItem',id)
-		axios.put(`/items/${id}`)
-		.then(response => {
-			console.log('in app updateItem axios.then')
-			getItems();
-	
-		})
-		.catch(err => {
-			alert('error updating items in app axios.put.catch')
-		})
-		
-	});
+	const deleteItem = (e) => {
+		const id = e.target.value;
+		console.log(id);
+		axios.delete(`/item/${id}`)
+				.then(() => {
+					getItems(); 
+				})
+				.catch((err) => {
+					console.log('Delete request error', err)
+				})
+			}
+
+			const updateItem = (id =>{
+				console.log('click updateItem',id)
+				axios.put(`/items/${id}`)
+				.then(response => {
+					console.log('in app updateItem axios.then')
+					getItems();
+			
+				})
+				.catch(err => {
+					alert('error updating items in app axios.put.catch')
+				})
+				
+			});
+
+	return (
+	<div>
+		<button value={item.id} onClick={(e) => deleteItem(e)}>Delete</button>
 		<button>UPDATE</button>
-	
-	return <div></div>;
-
+	</div>);
 }
+
 export default Item;
