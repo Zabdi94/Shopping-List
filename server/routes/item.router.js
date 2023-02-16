@@ -56,4 +56,48 @@ router.delete("/", (req, res) => {
     });
 });
 
+router.put("/", (req, res) => {
+	const sqlText = `UPDATE items SET "isPurchased"=false;`;
+
+	pool.query(sqlText)
+		.then(() => {
+			res.sendStatus(201);
+		})
+		.catch((error) => {
+			console.log(`Error making database query ${sqlText}`, error);
+			res.sendStatus(500);
+		});
+});
+
+    router.put('/:id',(req,res) => {
+        //update Database
+        console.log('in router.put',req.params.id);
+        const sqlText = `
+        UPDATE "items"
+        SET "isPurchased" = true
+        WHERE id =$1;
+        `
+        //Set variables for params
+        const deleteId = req.params.id;
+        
+        //assign variables to params
+        const sqlParams = [deleteId]
+        
+        //send sql query to the database
+        pool.query(sqlText,sqlParams)
+        .then ((result) => {
+            res.send(result.rows);
+            console.log('in items.router router.put then');
+            res.sendStatus(200);
+        })
+            .catch ((error)=> {
+                console.log('error making database updates',error);
+                res.sendStatus(500);
+            })
+
+    });
+
+
+    
+
 module.exports = router;
